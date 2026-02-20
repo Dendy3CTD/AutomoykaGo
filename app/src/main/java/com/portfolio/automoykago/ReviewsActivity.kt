@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.portfolio.automoykago.databinding.ActivityReviewsBinding
 import com.portfolio.automoykago.databinding.ItemReviewBinding
-import com.portfolio.automoykago.db.AppDatabase
+import com.portfolio.automoykago.db.AppDb
 import com.portfolio.automoykago.db.Review
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -42,9 +42,8 @@ class ReviewsActivity : AppCompatActivity() {
     }
 
     private fun loadReviews() {
-        val db = AppDatabase.getInstance(this)
         val reviews = runBlocking {
-            withContext(Dispatchers.IO) { db.reviewDao().getAll() }
+            withContext(Dispatchers.IO) { AppDb.getInstance(this@ReviewsActivity).getAllReviews(this@ReviewsActivity) }
         }
         binding.recyclerReviews.layoutManager = LinearLayoutManager(this)
         binding.recyclerReviews.adapter = ReviewAdapter(reviews, dateFormat)

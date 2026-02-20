@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.portfolio.automoykago.databinding.ActivityMainBinding
-import com.portfolio.automoykago.db.AppDatabase
+import com.portfolio.automoykago.db.AppDb
 import com.portfolio.automoykago.db.Order
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -152,14 +152,13 @@ class MainActivity : AppCompatActivity() {
             Prefs.addBalance(this, -total)
             runBlocking {
                 withContext(Dispatchers.IO) {
-                    AppDatabase.getInstance(this@MainActivity).orderDao().insert(
-                        Order(
-                            userName = userName,
-                            address = address,
-                            moduleNumber = selectedBay!!,
-                            services = services,
-                            totalAmount = total
-                        )
+                    AppDb.getInstance(this@MainActivity).insertOrder(
+                        this@MainActivity,
+                        userName = userName,
+                        address = address,
+                        moduleNumber = selectedBay!!,
+                        services = services,
+                        totalAmount = total
                     )
                 }
             }

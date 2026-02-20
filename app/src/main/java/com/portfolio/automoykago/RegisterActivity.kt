@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.portfolio.automoykago.databinding.ActivityRegisterBinding
-import com.portfolio.automoykago.db.AppDatabase
+import com.portfolio.automoykago.db.AppDb
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -32,9 +32,8 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             binding.inputPassword.error = null
-            val db = AppDatabase.getInstance(this)
             val existing = runBlocking {
-                withContext(Dispatchers.IO) { db.userDao().getByName(name) }
+                withContext(Dispatchers.IO) { AppDb.getInstance(this@RegisterActivity).getUserByName(this@RegisterActivity, name) }
             }
             if (existing != null) {
                 binding.inputName.error = getString(R.string.error_name_exists)
@@ -42,7 +41,7 @@ class RegisterActivity : AppCompatActivity() {
             }
             runBlocking {
                 withContext(Dispatchers.IO) {
-                    db.userDao().insert(com.portfolio.automoykago.db.User(name = name, password = password))
+                    AppDb.getInstance(this@RegisterActivity).insertUser(this@RegisterActivity, name, password)
                 }
             }
             Prefs.register(this, name, password)

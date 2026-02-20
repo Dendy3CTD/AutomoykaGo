@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.portfolio.automoykago.databinding.ActivityLoginBinding
-import com.portfolio.automoykago.db.AppDatabase
+import com.portfolio.automoykago.db.AppDb
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -35,9 +35,8 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             binding.inputPassword.error = null
-            val db = AppDatabase.getInstance(this)
             val user = runBlocking {
-                withContext(Dispatchers.IO) { db.userDao().getByName(name) }
+                withContext(Dispatchers.IO) { AppDb.getInstance(this@LoginActivity).getUserByName(this@LoginActivity, name) }
             }
             if (user == null || user.password != password) {
                 binding.inputPassword.error = getString(R.string.error_login_wrong)

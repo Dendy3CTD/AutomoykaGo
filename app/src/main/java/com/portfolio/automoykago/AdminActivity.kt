@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.portfolio.automoykago.databinding.ActivityAdminBinding
 import com.portfolio.automoykago.databinding.ItemAdminOrderBinding
 import com.portfolio.automoykago.databinding.ItemAdminUserBinding
-import com.portfolio.automoykago.db.AppDatabase
+import com.portfolio.automoykago.db.AppDb
 import com.portfolio.automoykago.db.Order
 import com.portfolio.automoykago.db.User
 import kotlinx.coroutines.Dispatchers
@@ -32,15 +32,15 @@ class AdminActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
-        val db = AppDatabase.getInstance(this)
+        val appDb = AppDb.getInstance(this)
         val users = runBlocking {
-            withContext(Dispatchers.IO) { db.userDao().getAll() }
+            withContext(Dispatchers.IO) { appDb.getAllUsers(this@AdminActivity) }
         }
         val orders = runBlocking {
-            withContext(Dispatchers.IO) { db.orderDao().getAll() }
+            withContext(Dispatchers.IO) { appDb.getAllOrders(this@AdminActivity) }
         }
         val totalRevenue = runBlocking {
-            withContext(Dispatchers.IO) { db.orderDao().getTotalRevenue() }
+            withContext(Dispatchers.IO) { appDb.getTotalRevenue(this@AdminActivity) }
         }
 
         binding.textTotalRevenue.text = getString(R.string.admin_total_revenue, totalRevenue)

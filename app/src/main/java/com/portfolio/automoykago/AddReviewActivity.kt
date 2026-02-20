@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.portfolio.automoykago.databinding.ActivityAddReviewBinding
-import com.portfolio.automoykago.db.AppDatabase
+import com.portfolio.automoykago.db.AppDb
 import com.portfolio.automoykago.db.Review
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -37,8 +37,11 @@ class AddReviewActivity : AppCompatActivity() {
             val userName = Prefs.getUserName(this).orEmpty().ifEmpty { "Гость" }
             runBlocking {
                 withContext(Dispatchers.IO) {
-                    AppDatabase.getInstance(this@AddReviewActivity).reviewDao().insert(
-                        Review(userName = userName, text = text, rating = rating)
+                    AppDb.getInstance(this@AddReviewActivity).insertReview(
+                        this@AddReviewActivity,
+                        userName = userName,
+                        text = text,
+                        rating = rating
                     )
                 }
             }
