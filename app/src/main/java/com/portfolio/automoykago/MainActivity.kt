@@ -6,6 +6,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.portfolio.automoykago.databinding.ActivityMainBinding
+import com.portfolio.automoykago.db.AppDatabase
+import com.portfolio.automoykago.db.Order
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,6 +56,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.toolbarTitle.text = addresses[addressIndex]
         binding.btnBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
+        binding.iconReviews.setOnClickListener {
+            startActivity(Intent(this, ReviewsActivity::class.java))
+        }
         binding.iconSettings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
@@ -123,7 +131,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupStartButton() {
         binding.btnStart.setOnClickListener {
             if (selectedBay == null) {
-                Toast.makeText(this, "Выберите пост", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.choose_bay), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             val total = chips.filter { it.first.isChecked }.sumOf { it.second }
@@ -131,13 +139,33 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Выберите хотя бы одну услугу", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            val balance = Prefs.getBalance(this)
+            if (balance < total) {
+                Toast.makeText(this, getString(R.string.error_insufficient_funds), Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
             val address = resources.getStringArray(R.array.addresses_rostov)[addressIndex]
             val services = chips
                 .filter { it.first.isChecked }
                 .joinToString(", ") { it.first.text.toString() }
+            val userName = Prefs.getUserName(this).orEmpty()
+            Prefs.addBalance(this, -total)
+            runBlocking {
+                withContext(Dispatchers.IO) {
+                    AppDatabase.getInstance(this@MainActivity).orderDao().insert(
+                        Order(
+                            userName = userName,
+                            address = address,
+                            moduleNumber = selectedBay!!,
+                            services = services,
+                            totalAmount = total
+                        )
+                    )
+                }
+            }
             Snackbar.make(
                 binding.root,
-                "$address — Пост $selectedBay: $services — $total ₽",
+                getString(R.string.order_summary_format, address, selectedBay.toString(), services, total.toString()),
                 Snackbar.LENGTH_LONG
             ).show()
         }

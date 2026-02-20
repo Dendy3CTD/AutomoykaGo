@@ -25,6 +25,15 @@
             android:textColor="?attr/colorOnPrimary"/>
 
         <ImageButton
+            android:id="@+id/iconReviews"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_reviews"
+            android:contentDescription="@string/reviews"
+            android:scaleType="centerInside"/>
+
+        <ImageButton
             android:id="@+id/iconSettings"
             android:layout_width="48dp"
             android:layout_height="48dp"

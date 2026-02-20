@@ -49,6 +49,31 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AutomoykaGo"/>
+        <activity
+            android:name=".TopUpActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AutomoykaGo"/>
+        <activity
+            android:name=".ReviewsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AutomoykaGo"/>
+        <activity
+            android:name=".AddReviewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AutomoykaGo"/>
+        <activity
+            android:name=".AdminLoginActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AutomoykaGo"/>
+        <activity
+            android:name=".AdminActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AutomoykaGo"/>
     </application>
 
 </manifest>

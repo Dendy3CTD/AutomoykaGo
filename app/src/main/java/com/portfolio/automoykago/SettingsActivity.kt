@@ -17,6 +17,10 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
+        updateBalanceDisplay()
+        binding.cardBalance.setOnClickListener { startActivity(Intent(this, TopUpActivity::class.java)) }
+        binding.btnTopUp.setOnClickListener { startActivity(Intent(this, TopUpActivity::class.java)) }
+
         binding.switchDarkTheme.isChecked = Prefs.isDarkTheme(this)
         binding.switchDarkTheme.setOnCheckedChangeListener { _, isChecked ->
             Prefs.setDarkTheme(this, isChecked)
@@ -37,7 +41,12 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        updateBalanceDisplay()
         updateCardStatus()
+    }
+
+    private fun updateBalanceDisplay() {
+        binding.textBalance.text = getString(R.string.balance, Prefs.getBalance(this))
     }
 
     private fun updateCardStatus() {

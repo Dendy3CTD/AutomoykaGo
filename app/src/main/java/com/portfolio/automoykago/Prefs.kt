@@ -13,6 +13,7 @@ object Prefs {
     private const val KEY_DARK_THEME = "dark_theme"
     private const val KEY_CARD_LINKED = "card_linked"
     private const val KEY_CARD_LAST4 = "card_last4"
+    private const val KEY_BALANCE = "balance"
 
     private fun prefs(context: Context): SharedPreferences =
         context.getSharedPreferences(NAME, Context.MODE_PRIVATE)
@@ -33,7 +34,20 @@ object Prefs {
             .putBoolean(KEY_IS_REGISTERED, false)
             .remove(KEY_CARD_LINKED)
             .remove(KEY_CARD_LAST4)
+            .remove(KEY_BALANCE)
             .apply()
+    }
+
+    fun getBalance(context: Context): Int =
+        prefs(context).getInt(KEY_BALANCE, 0)
+
+    fun setBalance(context: Context, amount: Int) {
+        prefs(context).edit().putInt(KEY_BALANCE, amount.coerceAtLeast(0)).apply()
+    }
+
+    fun addBalance(context: Context, amount: Int) {
+        val newBalance = (getBalance(context) + amount).coerceAtLeast(0)
+        setBalance(context, newBalance)
     }
 
     fun getUserName(context: Context): String? =

@@ -27,5 +27,8 @@ class EntryActivity : AppCompatActivity() {
         binding.btnRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
+        binding.btnAdmin.setOnClickListener {
+            startActivity(Intent(this, AdminLoginActivity::class.java))
+        }
     }
 }

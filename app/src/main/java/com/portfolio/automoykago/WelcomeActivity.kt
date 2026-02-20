@@ -21,6 +21,9 @@ class WelcomeActivity : AppCompatActivity() {
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.iconReviews.setOnClickListener {
+            startActivity(Intent(this, ReviewsActivity::class.java))
+        }
         binding.iconSettings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }

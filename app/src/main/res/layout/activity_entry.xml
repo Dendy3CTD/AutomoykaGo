@@ -34,5 +34,17 @@
         android:layout_height="56dp"
         android:text="@string/register_btn"
         android:textSize="18sp"
-        app:cornerRadius="12dp"/>
+        app:cornerRadius="12dp"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:id="@+id/btnAdmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/admin"
+        android:textSize="14sp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:padding="8dp"
+        android:clickable="true"
+        android:focusable="true"/>
 </LinearLayout>

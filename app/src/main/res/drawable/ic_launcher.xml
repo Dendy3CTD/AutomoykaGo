@@ -4,16 +4,35 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
+
+    <!-- Фон круг -->
     <path
-        android:fillColor="#2196F3"
-        android:pathData="M54,30 L72,42 L72,66 L36,66 L36,42 Z"/>
+        android:fillColor="#1976D2"
+        android:pathData="M54,54m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0"/>
+
+    <!-- Машина: кузов -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M44,50 L64,50 L64,58 L44,58 Z"/>
+        android:pathData="M30,54 L78,54 L78,60 L30,60 Z"/>
+    <!-- Окно/кабина -->
     <path
-        android:fillColor="#1976D2"
-        android:pathData="M48,38 L52,38 L52,46 L48,46 Z"/>
+        android:fillColor="#FFFFFF"
+        android:pathData="M36,46 L46,46 L46,54 L36,54 Z"/>
     <path
-        android:fillColor="#1976D2"
-        android:pathData="M56,38 L60,38 L60,46 L56,46 Z"/>
+        android:fillColor="#FFFFFF"
+        android:pathData="M50,46 L58,46 L58,54 L50,54 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M62,46 L72,46 L72,54 L62,54 Z"/>
+
+    <!-- Капли воды (круги) -->
+    <path
+        android:fillColor="#BBDEFB"
+        android:pathData="M44,38 m-3,0 a3,3 0 1,1 6,0 a3,3 0 1,1 -6,0"/>
+    <path
+        android:fillColor="#BBDEFB"
+        android:pathData="M58,35 m-2.5,0 a2.5,2.5 0 1,1 5,0 a2.5,2.5 0 1,1 -5,0"/>
+    <path
+        android:fillColor="#BBDEFB"
+        android:pathData="M72,40 m-2,0 a2,2 0 1,1 4,0 a2,2 0 1,1 -4,0"/>
 </vector>
