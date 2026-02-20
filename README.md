@@ -1,141 +1,168 @@
-# Автомойка Go
+# Automoyka Go
 
-Мобильное приложение для автомойки самообслуживания (портфолио-проект). Позволяет выбирать адрес автомойки, пост, услуги и видеть итоговую сумму. Поддерживает регистрацию, вход, настройки, привязку карты и тёмную тему.
-
----
-
-## Содержание
-
-- [Возможности](#возможности)
-- [Экраны и навигация](#экраны-и-навигация)
-- [Версии](#версии)
-- [Требования и сборка](#требования-и-сборка)
-- [Стек технологий](#стек-технологий)
-- [Структура проекта](#структура-проекта)
-- [Решение проблем](#решение-проблем)
+A mobile app for self-service car wash (portfolio project). Choose a car wash address, bay (module), services, and see the total. Supports registration, login, settings, virtual card balance, card linking, dark theme, reviews, and admin panel with SQL database.
 
 ---
 
-## Возможности
+## Table of Contents
 
-### Учётная запись
-- **Регистрация** — имя и пароль (не менее 4 символов).
-- **Вход** — повторный вход после выхода из аккаунта по тем же данным.
-- **Выход из аккаунта** — в настройках; после выхода доступны экраны «Войти» и «Зарегистрироваться».
-
-### Выбор автомойки и заказ
-- **Экран приветствия** — приветствие по имени, настройки (иконка шестерёнки справа), список адресов автомоек в Ростове-на-Дону.
-- **Выбор адреса** — тап по карточке адреса открывает экран заказа для этой автомойки.
-- **Выбор поста (модуля)** — 4 поста со статусом «Свободен» / «Занят».
-- **Услуги** — быстрая мойка (150 ₽), стандартная (250 ₽), премиум (400 ₽), мойка поддона (100 ₽), воск (200 ₽). Можно выбрать несколько.
-- **Итого** — автоматический расчёт суммы по выбранным услугам.
-- **Начать** — проверка выбора поста и хотя бы одной услуги; показ итога (адрес, пост, услуги, сумма).
-
-### Настройки
-- **Тёмная тема** — переключатель в настройках; тема применяется сразу.
-- **Банковская карта** — привязка/отвязка карты (номер, срок, CVV); сохраняются только последние 4 цифры (реальная оплата не реализована).
-- **Выйти из аккаунта** — сброс сессии с возможностью войти или зарегистрироваться заново.
-
-### Интерфейс
-- Иконка **шестерёнки** справа вверху на экране приветствия и на экране заказа — открывает настройки.
-- На экране заказа — стрелка «Назад» и заголовок с адресом выбранной автомойки.
+- [Features](#features)
+- [Screens and Navigation](#screens-and-navigation)
+- [Versions](#versions)
+- [Requirements and Build](#requirements-and-build)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Troubleshooting](#troubleshooting)
 
 ---
 
-## Экраны и навигация
+## Features
 
-1. **WelcomeActivity** (стартовый после входа) — приветствие, настройки, список адресов.
-2. **EntryActivity** — выбор «Войти в аккаунт» или «Зарегистрироваться» (показывается при первом запуске и после выхода).
-3. **RegisterActivity** — регистрация (имя, пароль).
-4. **LoginActivity** — вход (имя, пароль).
-5. **MainActivity** — заказ: выбор поста, услуг, итог, кнопка «Начать».
-6. **SettingsActivity** — тёмная тема, банковская карта, выход из аккаунта.
-7. **LinkCardActivity** — привязка карты (номер, срок, CVV).
+### Account
+- **Registration** — name and password (at least 4 characters).
+- **Login** — sign in again after logout with the same credentials.
+- **Logout** — in settings; after logout you can choose "Log in" or "Register".
 
-Адреса автомоек — фиксированный список из 12 адресов в Ростове-на-Дону (Большая Садовая, Будённовский, Красноармейская и др.).
+### Car Wash and Order
+- **Welcome screen** — greeting by name, settings (gear icon on the right), reviews (star icon), list of car wash addresses in Rostov-on-Don.
+- **Address selection** — tap a card to open the order screen for that car wash.
+- **Bay (module) selection** — 4 bays with status "Available" / "Occupied".
+- **Services** — quick wash (150 ₽), standard (250 ₽), premium (400 ₽), underbody wash (100 ₽), wax (200 ₽). Multiple selection allowed.
+- **Total** — automatic sum of selected services.
+- **Start** — checks bay and at least one service; payment from virtual balance; shows summary (address, bay, services, amount).
+
+### Virtual Card and Payment
+- **Balance** — virtual balance in settings; top up via the "Top up" button (by card or demo).
+- **Payment** — when you tap "Start", the amount is deducted from the balance; insufficient balance shows a message to top up in settings.
+
+### Settings
+- **Dark theme** — switch in settings; applied immediately.
+- **Bank card** — link/unlink card (number, expiry, CVV); only last 4 digits stored (no real payment).
+- **Log out** — clears session; you can log in or register again.
+
+### Interface
+- **Gear icon** (top right) on welcome and order screens — opens settings.
+- **Star icon** (next to gear) — opens reviews.
+- On the order screen — back arrow and title with the selected car wash address.
 
 ---
 
-## Версии
+## Screens and Navigation
 
-### v1.0.0 — Базовый функционал
-- Один экран: выбор поста (4 поста), выбор услуг (чипы с ценами), расчёт итога, кнопка «Начать».
-- Статусы постов: свободен / занят (демо: пост 2 занят).
+1. **WelcomeActivity** (after login) — greeting, reviews icon, settings icon, list of addresses.
+2. **EntryActivity** — choice "Log in" or "Register" (first launch and after logout).
+3. **RegisterActivity** — registration (name, password).
+4. **LoginActivity** — login (name, password).
+5. **MainActivity** — order: bay, services, total, "Start" button (pay from balance).
+6. **SettingsActivity** — balance & top-up, dark theme, bank card, logout.
+7. **TopUpActivity** — top up virtual balance (amount, by card / demo).
+8. **LinkCardActivity** — link card (number, expiry, CVV).
+9. **ReviewsActivity** — list of reviews; button to add a review.
+10. **AddReviewActivity** — new review (rating 1–5, text).
+11. **AdminLoginActivity** / **AdminActivity** — admin login (admin/admin), users list, orders (accounting), total revenue.
+
+Car wash addresses — fixed list of 12 addresses in Rostov-on-Don.
+
+---
+
+## Versions
+
+### v1.0.0 — Basic
+- Single screen: bay selection (4 bays), services (chips with prices), total, "Start" button.
+- Bay status: available / occupied (demo: bay 2 occupied).
 - Material Components, View Binding, CardView.
 
-### v1.1.0 — Регистрация и первый вход
-- При первом запуске показывается экран регистрации (имя, пароль).
-- После регистрации переход на главный экран.
-- Сохранение данных в SharedPreferences (Prefs).
+### v1.1.0 — Registration
+- Registration screen on first launch (name, password).
+- After registration — main screen.
+- Data stored in SharedPreferences (Prefs).
 
-### v1.2.0 — Адреса и настройки
-- Выбор адреса автомойки: спиннер со списком адресов Ростова-на-Дону.
-- Экран настроек: тёмная тема, привязка банковской карты, выход из аккаунта.
-- Привязка карты (UI): номер, срок, CVV; сохраняются только последние 4 цифры.
+### v1.2.0 — Addresses and Settings
+- Car wash address: spinner with Rostov-on-Don addresses.
+- Settings screen: dark theme, bank card link, logout.
+- Card link (UI): number, expiry, CVV; only last 4 digits stored.
 
-### v1.3.0 — Тёмная тема
-- Поддержка тёмной темы: `values-night/colors.xml`, `values-night/themes.xml`.
-- Переключатель в настройках; тема сохраняется и применяется при следующем запуске (App + Prefs).
+### v1.3.0 — Dark Theme
+- Dark theme: `values-night/colors.xml`, `values-night/themes.xml`.
+- Switch in settings; theme saved and applied on next launch (App + Prefs).
 
-### v1.4.0 — Реструктуризация экранов
-- Экран приветствия после входа: приветствие по имени, настройки (иконка шестерёнки), список адресов автомоек.
-- Выбор автомойки по тапу на карточку адреса → открывается экран заказа (пост, услуги, цена) для выбранного адреса.
-- Убран спиннер адреса с экрана заказа; адрес передаётся через Intent и отображается в заголовке.
+### v1.4.0 — Screen Restructure
+- Welcome screen after login: greeting, settings icon, list of car wash addresses.
+- Tap address card → order screen (bay, services, price) for that address.
+- Address spinner removed from order screen; address passed via Intent in title.
 
-### v1.5.0 — Вход и выход из аккаунта
-- В настройках кнопка «Выйти из аккаунта».
-- После выхода — экран выбора: «Войти в аккаунт» или «Зарегистрироваться».
-- Экран входа (LoginActivity): имя и пароль, проверка по сохранённым данным; при успехе — переход на экран приветствия.
-- При выходе имя и пароль не удаляются (для возможности повторного входа).
+### v1.5.0 — Login and Logout
+- "Log out" button in settings.
+- After logout — choice screen: "Log in" or "Register".
+- Login screen: name and password, check against stored data; on success → welcome screen.
+- On logout, name and password kept for re-login.
 
-### v1.6.0 — Иконка настроек и доработки
-- Иконка шестерёнки в правом верхнем углу (отдельная кнопка) на экране приветствия и на экране заказа.
-- На экране заказа: стрелка «Назад» и заголовок с адресом выбранной автомойки.
-- Drawable: `ic_settings_gear.xml`, `ic_arrow_back.xml`.
+### v1.6.0 — Settings Icon and Reviews
+- Gear icon (top right) on welcome and order screens.
+- Star icon for reviews; Reviews screen and add review.
+- Back arrow and address in order screen title.
+- Drawables: `ic_settings_gear.xml`, `ic_arrow_back.xml`, `ic_reviews.xml`.
+
+### v1.7.0 — Database, Admin, Virtual Card
+- **SQL database** (SQLite): raw SQL via `DatabaseHelper` and `AppDb`; tables: users, orders, reviews. Schema in `database/schema.sql`.
+- **Admin panel** — entry "Admin" on login screen; login admin/admin; users list, orders (accounting), total revenue.
+- **Virtual card** — balance in settings; top-up screen (by card / demo); payment from balance when tapping "Start".
+- **Reviews** stored in DB; list and add review with rating.
 
 ---
 
-## Требования и сборка
+## Requirements and Build
 
-### Требования
-- **Android Studio** Hedgehog (2023.1.1) или новее  
+### Requirements
+- **Android Studio** Hedgehog (2023.1.1) or newer  
 - **JDK** 17  
 - **minSdk** 24, **targetSdk** 34  
 
-### Сборка и запуск
-1. Откройте проект в Android Studio: **File → Open** → выберите папку `AutomoykaGo`.
-2. Дождитесь **Sync Project with Gradle Files** (или нажмите «Sync» в панели).
-3. Подключите устройство или запустите эмулятор.
-4. Нажмите **Run** (зелёный треугольник).
+### Build and Run
+1. Open the project in Android Studio: **File → Open** → select the `AutomoykaGo` folder.
+2. Wait for **Sync Project with Gradle Files** (or click "Sync" in the toolbar).
+3. Connect a device or start an emulator.
+4. Click **Run** (green triangle).
 
-При первом открытии Gradle может запросить загрузку — согласитесь. При ошибке про Gradle Wrapper: **Tools → Gradle → Create Gradle Wrapper**, затем снова **Sync**.
-
----
-
-## Стек технологий
-
-- **Язык:** Kotlin  
-- **UI:** View Binding, Material Components (Chip, Button, TextInputLayout, Toolbar, CardView, SwitchMaterial)  
-- **Хранение:** SharedPreferences (Prefs)  
-- **Темы:** Material DayNight, собственные `values` и `values-night`  
-- **Сборка:** Gradle (Kotlin DSL), AGP 8.13.2, Gradle 8.13  
+On first open, Gradle may ask to download — accept. If you see a Gradle Wrapper error: **Tools → Gradle → Create Gradle Wrapper**, then **Sync** again.
 
 ---
 
-## Структура проекта
+## Tech Stack
+
+- **Language:** Kotlin  
+- **UI:** View Binding, Material Components (Chip, Button, TextInputLayout, Toolbar, CardView, SwitchMaterial, RecyclerView)  
+- **Storage:** SharedPreferences (Prefs), SQLite via raw SQL (`DatabaseHelper`, `AppDb`)  
+- **Themes:** Material DayNight, custom `values` and `values-night`  
+- **Build:** Gradle (Kotlin DSL), AGP 8.13.2, Gradle 8.13  
+
+---
+
+## Project Structure
 
 ```
 app/src/main/
 ├── java/com/portfolio/automoykago/
-│   ├── App.kt                 # Application: применение темы при старте
-│   ├── Prefs.kt                # SharedPreferences: пользователь, тема, карта, адрес
-│   ├── WelcomeActivity.kt      # Приветствие + список адресов
-│   ├── EntryActivity.kt        # Выбор: Войти / Зарегистрироваться
-│   ├── RegisterActivity.kt     # Регистрация
-│   ├── LoginActivity.kt        # Вход
-│   ├── MainActivity.kt         # Заказ: пост, услуги, итог
-│   ├── SettingsActivity.kt     # Настройки
-│   └── LinkCardActivity.kt     # Привязка карты
+│   ├── App.kt
+│   ├── Prefs.kt
+│   ├── WelcomeActivity.kt
+│   ├── EntryActivity.kt
+│   ├── RegisterActivity.kt
+│   ├── LoginActivity.kt
+│   ├── MainActivity.kt
+│   ├── SettingsActivity.kt
+│   ├── TopUpActivity.kt
+│   ├── LinkCardActivity.kt
+│   ├── ReviewsActivity.kt
+│   ├── AddReviewActivity.kt
+│   ├── AdminLoginActivity.kt
+│   ├── AdminActivity.kt
+│   └── db/
+│       ├── DatabaseHelper.kt    # SQLiteOpenHelper, raw SQL schema
+│       ├── AppDb.kt             # Raw SQL access (users, orders, reviews)
+│       ├── User.kt
+│       ├── Order.kt
+│       └── Review.kt
 ├── res/
 │   ├── layout/
 │   │   ├── activity_welcome.xml
@@ -144,27 +171,32 @@ app/src/main/
 │   │   ├── activity_login.xml
 │   │   ├── activity_main.xml
 │   │   ├── activity_settings.xml
+│   │   ├── activity_top_up.xml
 │   │   ├── activity_link_card.xml
-│   │   └── item_address.xml
+│   │   ├── activity_reviews.xml
+│   │   ├── activity_add_review.xml
+│   │   ├── activity_admin.xml
+│   │   ├── activity_admin_login.xml
+│   │   ├── item_address.xml
+│   │   ├── item_review.xml
+│   │   ├── item_admin_user.xml
+│   │   └── item_admin_order.xml
 │   ├── menu/menu_main.xml
-│   ├── values/
-│   │   ├── strings.xml         # в т.ч. addresses_rostov (string-array)
-│   │   ├── colors.xml
-│   │   └── themes.xml
-│   ├── values-night/
-│   │   ├── colors.xml
-│   │   └── themes.xml
-│   └── drawable/
-│       ├── ic_launcher.xml
-│       ├── ic_settings_gear.xml
-│       └── ic_arrow_back.xml
+│   ├── values/strings.xml, colors.xml, themes.xml
+│   ├── values-night/colors.xml, themes.xml
+│   └── drawable/ic_launcher.xml, ic_settings_gear.xml, ic_arrow_back.xml, ic_reviews.xml
 └── AndroidManifest.xml
+
+database/
+├── schema.sql    # SQLite table definitions
+├── queries.sql   # Example queries
+└── indexes.sql   # Optional indexes
 ```
 
 ---
 
-## Решение проблем
+## Troubleshooting
 
-- **«Your project path contains non-ASCII characters»** — перенесите проект в папку без кириллицы (например, `C:\Users\...\AutomoykaGo`) и откройте её заново.
-- **«Incompatible Gradle JVM»** — в **File → Settings → Build, Execution, Deployment → Build Tools → Gradle** выберите JDK 17 (или 11).
-- Другие ошибки синхронизации — обновите Android Gradle Plugin и Gradle до версий, предложенных в уведомлениях IDE.
+- **"Your project path contains non-ASCII characters"** — move the project to a path without Cyrillic (e.g. `C:\Users\...\AutomoykaGo`) and open it again.
+- **"Incompatible Gradle JVM"** — in **File → Settings → Build, Execution, Deployment → Build Tools → Gradle** select JDK 17 (or 11).
+- Other sync errors — update Android Gradle Plugin and Gradle to the versions suggested by the IDE.
