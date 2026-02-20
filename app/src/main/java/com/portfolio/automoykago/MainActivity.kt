@@ -1,15 +1,20 @@
 package com.portfolio.automoykago
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.portfolio.automoykago.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        const val EXTRA_ADDRESS_INDEX = "address_index"
+    }
+
     private lateinit var binding: ActivityMainBinding
+    private var addressIndex: Int = 0
     private var selectedBay: Int? = null
     private val bayCards by lazy {
         listOf(binding.cardBay1, binding.cardBay2, binding.cardBay3, binding.cardBay4)
@@ -32,8 +37,23 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        addressIndex = intent.getIntExtra(EXTRA_ADDRESS_INDEX, -1)
+        val addresses = resources.getStringArray(R.array.addresses_rostov)
+        if (addressIndex !in addresses.indices) {
+            startActivity(Intent(this, EntryActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            })
+            finish()
+            return
+        }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.toolbarTitle.text = addresses[addressIndex]
+        binding.btnBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
+        binding.iconSettings.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
 
         setupBayTitles()
         setupBaySelection()
@@ -47,7 +67,6 @@ class MainActivity : AppCompatActivity() {
                 textView.text = String.format(format, index + 1)
             }
         }
-        // Демо: пост 2 "занят"
         bayStatuses[1].text = getString(R.string.busy)
         bayStatuses[1].setTextColor(getColor(R.color.busy_red))
     }
@@ -70,7 +89,7 @@ class MainActivity : AppCompatActivity() {
             card.isSelected = (index + 1) == bayNumber
             card.setCardBackgroundColor(
                 if (card.isSelected) getColor(R.color.primary)
-                else getColor(android.R.color.white)
+                else getColor(R.color.surface)
             )
         }
         bayTitles.forEachIndexed { index, textView ->
@@ -112,12 +131,13 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Выберите хотя бы одну услугу", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            val address = resources.getStringArray(R.array.addresses_rostov)[addressIndex]
             val services = chips
                 .filter { it.first.isChecked }
                 .joinToString(", ") { it.first.text.toString() }
             Snackbar.make(
                 binding.root,
-                "Пост $selectedBay: $services — $total ₽",
+                "$address — Пост $selectedBay: $services — $total ₽",
                 Snackbar.LENGTH_LONG
             ).show()
         }

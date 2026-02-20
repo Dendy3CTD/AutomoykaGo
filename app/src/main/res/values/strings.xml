@@ -17,4 +17,59 @@
     <string name="time_min">%1$d мин</string>
     <string name="total">Итого</string>
     <string name="payment">Оплатить</string>
+
+    <!-- Регистрация -->
+    <string name="registration_title">Регистрация</string>
+    <string name="name">Имя</string>
+    <string name="password">Пароль</string>
+    <string name="register_btn">Зарегистрироваться</string>
+    <string name="error_name_empty">Введите имя</string>
+    <string name="error_password_short">Пароль не менее 4 символов</string>
+    <string name="registration_success">Добро пожаловать!</string>
+
+    <!-- Адрес -->
+    <string name="address_label">Адрес автомойки</string>
+    <string name="choose_address">Выберите адрес</string>
+    <string name="greeting">Привет, %1$s!</string>
+    <string name="choose_carwash">Выберите автомойку самообслуживания</string>
+
+    <!-- Настройки -->
+    <string name="settings">Настройки</string>
+    <string name="dark_theme">Тёмная тема</string>
+    <string name="bank_card">Банковская карта</string>
+    <string name="logout">Выйти</string>
+    <string name="logout_account">Выйти из аккаунта</string>
+    <string name="entry_title">Вход в приложение</string>
+    <string name="login_btn">Войти в аккаунт</string>
+    <string name="login_title">Вход</string>
+    <string name="login_btn_short">Войти</string>
+    <string name="error_login_wrong">Неверное имя или пароль</string>
+    <string name="card_linked_format">Карта **** %1$s</string>
+    <string name="link_card">Привязать карту</string>
+    <string name="unlink_card">Отвязать</string>
+
+    <!-- Привязка карты -->
+    <string name="link_card_title">Привязать карту</string>
+    <string name="card_number">Номер карты</string>
+    <string name="card_expiry">Срок действия (ММ/ГГ)</string>
+    <string name="card_cvv">CVV</string>
+    <string name="link_card_btn">Привязать</string>
+    <string name="card_linked_success">Карта привязана</string>
+    <string name="error_card_invalid">Проверьте данные карты</string>
+
+    <!-- Адреса Ростова-на-Дону -->
+    <string-array name="addresses_rostov">
+        <item>ул. Большая Садовая, 47</item>
+        <item>пр. Будённовский, 80</item>
+        <item>ул. Красноармейская, 72</item>
+        <item>пр. Ворошиловский, 28</item>
+        <item>ул. Пушкинская, 148</item>
+        <item>ул. Социалистическая, 112</item>
+        <item>пр. Сельмаш, 3</item>
+        <item>ул. Таганрогская, 132</item>
+        <item>ул. 1-я Конная, 6Б</item>
+        <item>пр. Стачки, 214</item>
+        <item>ул. Малиновского, 34</item>
+        <item>ул. Зорге, 33</item>
+    </string-array>
 </resources>
