@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Автомойка Go</string>
+    <string name="choose_bay">Выберите пост</string>
+    <string name="bay">Пост %1$d</string>
+    <string name="available">Свободен</string>
+    <string name="busy">Занят</string>
+    <string name="services">Услуги</string>
+    <string name="quick_wash">Быстрая мойка</string>
+    <string name="standard_wash">Стандартная мойка</string>
+    <string name="premium_wash">Премиум мойка</string>
+    <string name="underbody">Мойка поддона</string>
+    <string name="wax">Воск</string>
+    <string name="start">Начать</string>
+    <string name="stop">Стоп</string>
+    <string name="price_rub">%1$d ₽</string>
+    <string name="time_min">%1$d мин</string>
+    <string name="total">Итого</string>
+    <string name="payment">Оплатить</string>
+</resources>
