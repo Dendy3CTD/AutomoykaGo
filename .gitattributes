@@ -1,0 +1,2 @@
+# Учитывать SQL в статистике языков на GitHub
+*.sql linguist-detectable=true
